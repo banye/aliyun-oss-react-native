@@ -1,6 +1,7 @@
 package com.reactlibrary;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -70,7 +71,7 @@ public class AliyunUploadManager {
      * @param options
      * @param promise
      */
-    public void asyncUpload(final ReactContext context, String bucketName, String ossFile, String sourceFile, ReadableMap options, final Promise promise) {
+    public void asyncUpload(final ReactContext context, Activity currentActivity, String bucketName, String ossFile, String sourceFile, ReadableMap options, final Promise promise) {
         // Content to file:// start
         Uri selectedVideoUri = Uri.parse(sourceFile);
 
@@ -79,13 +80,13 @@ public class AliyunUploadManager {
         Cursor cursor = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = context.getCurrentActivity().getContentResolver().query(selectedVideoUri, proj, null, null, null);
+            cursor = currentActivity.getContentResolver().query(selectedVideoUri, proj, null, null, null);
             if (cursor == null) sourceFile = selectedVideoUri.getPath();
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             sourceFile = cursor.getString(column_index);
         } catch (Exception e) {
-            sourceFile = FileUtils.getFilePathFromURI(context.getCurrentActivity(), selectedVideoUri);
+            sourceFile = FileUtils.getFilePathFromURI(currentActivity, selectedVideoUri);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -137,7 +138,7 @@ public class AliyunUploadManager {
      * @param options
      * @param promise
      */
-    public void asyncAppendObject(final ReactContext context,String bucketName,String objectKey,String uploadFilePath,ReadableMap options,final Promise promise) {
+    public void asyncAppendObject(final ReactContext context, Activity currentActivity,String bucketName,String objectKey,String uploadFilePath,ReadableMap options,final Promise promise) {
 
         // Content to file:// start
         Uri selectedVideoUri = Uri.parse(uploadFilePath);
@@ -147,13 +148,13 @@ public class AliyunUploadManager {
         Cursor cursor = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = context.getCurrentActivity().getContentResolver().query(selectedVideoUri, proj, null, null, null);
+            cursor = currentActivity.getContentResolver().query(selectedVideoUri, proj, null, null, null);
             if (cursor == null) uploadFilePath = selectedVideoUri.getPath();
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             uploadFilePath = cursor.getString(column_index);
         } catch (Exception e) {
-            uploadFilePath = FileUtils.getFilePathFromURI(context.getCurrentActivity(), selectedVideoUri);
+            uploadFilePath = FileUtils.getFilePathFromURI(currentActivity, selectedVideoUri);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -210,7 +211,7 @@ public class AliyunUploadManager {
      * @param options
      * @param promise
      */
-    public void asyncResumableUpload(final ReactContext context, String bucketName, String objectKey, String uploadFilePath, ReadableMap options, final Promise promise) {
+    public void asyncResumableUpload(final ReactContext context, Activity currentActivity, String bucketName, String objectKey, String uploadFilePath, ReadableMap options, final Promise promise) {
 
         ResumableUploadRequest request = new ResumableUploadRequest(bucketName, objectKey, uploadFilePath);
 
@@ -275,7 +276,7 @@ public class AliyunUploadManager {
      * @param options
      * @param promise
      */
-    public void multipartUpload(final ReactContext context,String bucketName, String objectKey, String uploadId,String filepath, ReadableMap options,final Promise promise) {
+    public void multipartUpload(final ReactContext context, Activity currentActivity,String bucketName, String objectKey, String uploadId,String filepath, ReadableMap options,final Promise promise) {
 
         Uri selectedVideoUri = Uri.parse(filepath);
         // 1. content uri -> file path
@@ -283,13 +284,13 @@ public class AliyunUploadManager {
         Cursor cursor = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = context.getCurrentActivity().getContentResolver().query(selectedVideoUri, proj, null, null, null);
+            cursor = currentActivity.getContentResolver().query(selectedVideoUri, proj, null, null, null);
             if (cursor == null) filepath = selectedVideoUri.getPath();
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             filepath = cursor.getString(column_index);
         } catch (Exception e) {
-            filepath = FileUtils.getFilePathFromURI(context.getCurrentActivity(), selectedVideoUri);
+            filepath = FileUtils.getFilePathFromURI(currentActivity, selectedVideoUri);
         } finally {
             if (cursor != null) {
                 cursor.close();

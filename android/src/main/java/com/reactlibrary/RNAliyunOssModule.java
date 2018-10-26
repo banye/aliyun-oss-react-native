@@ -185,7 +185,7 @@ public class RNAliyunOssModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void asyncUpload(String bucketName, String ossFile, String sourceFile,ReadableMap options, final Promise promise) {
-        mUploadManager.asyncUpload(getReactApplicationContext(), bucketName, ossFile, sourceFile, options, promise);
+        mUploadManager.asyncUpload(getReactApplicationContext(),getCurrentActivity(), bucketName, ossFile, sourceFile, options, promise);
     }
 
     /**
@@ -198,7 +198,7 @@ public class RNAliyunOssModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void asyncAppendObject(String bucketName,String objectKey,String uploadFilePath,ReadableMap options,final Promise promise) {
-        mUploadManager.asyncAppendObject(getReactApplicationContext(),bucketName, objectKey, uploadFilePath, options, promise);
+        mUploadManager.asyncAppendObject(getReactApplicationContext(),getCurrentActivity(),bucketName, objectKey, uploadFilePath, options, promise);
     }
 
     /**
@@ -211,7 +211,7 @@ public class RNAliyunOssModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void asyncResumableUpload(String bucketName,String objectKey,String uploadFilePath,ReadableMap options,final Promise promise) {
-        mUploadManager.asyncResumableUpload(getReactApplicationContext(), bucketName, objectKey, uploadFilePath, options, promise);
+        mUploadManager.asyncResumableUpload(getReactApplicationContext(),getCurrentActivity(), bucketName, objectKey, uploadFilePath, options, promise);
     }
 
     /**
@@ -236,7 +236,7 @@ public class RNAliyunOssModule extends ReactContextBaseJavaModule {
 //    @SuppressLint("LongLogTag")
     @ReactMethod
     public void multipartUpload(String bucketName, String objectKey, String uploadId, String filepath, ReadableMap options,final Promise promise) {
-        mUploadManager.multipartUpload(getReactApplicationContext(), bucketName, objectKey, uploadId, filepath, options, promise);
+        mUploadManager.multipartUpload(getReactApplicationContext(),getCurrentActivity(), bucketName, objectKey, uploadId, filepath, options, promise);
     }
 
     /**
